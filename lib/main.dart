@@ -1,15 +1,36 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:restaurant_app/features/auth/presentation/viewmodels/auth_cubit/auth_cubit.dart';
+import 'core/services/service_locator.dart';
+import 'features/auth/presentation/views/login_view.dart';
+import 'firebase_options.dart'; // ملف إعدادات الفايربيز بتاعك
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // تهيئة الفايربيز
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  // تشغيل الـ Service Locator لربط الاعتماديات
+  setupServiceLocator();
+
   runApp(const RestaurantApp());
 }
 
 class RestaurantApp extends StatelessWidget {
   const RestaurantApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp();
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Restaurant App',
+      home: BlocProvider(
+        // بديل السلسلة الطويلة: السطر السحري ده بس!
+        create: (context) => getIt<AuthCubit>(),
+        child: const LoginView(),
+      ),
+    );
   }
 }
