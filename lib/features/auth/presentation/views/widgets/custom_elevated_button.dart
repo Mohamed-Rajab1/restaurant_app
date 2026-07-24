@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:restaurant_app/features/auth/presentation/viewmodels/auth_cubit/auth_cubit.dart';
+import 'package:restaurant_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   const CustomElevatedButton({

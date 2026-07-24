@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:restaurant_app/features/auth/presentation/viewmodels/auth_cubit/auth_cubit.dart';
+import 'package:restaurant_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'core/services/service_locator.dart';
 import 'features/auth/presentation/views/login_view.dart';
 import 'firebase_options.dart'; // ملف إعدادات الفايربيز بتاعك
@@ -26,9 +26,11 @@ class RestaurantApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Restaurant App',
-      home: BlocProvider(
+      home: MultiBlocProvider(
         // بديل السلسلة الطويلة: السطر السحري ده بس!
-        create: (context) => getIt<AuthCubit>(),
+        providers: [
+          BlocProvider<AuthCubit>(create: (context) => getIt<AuthCubit>()),
+        ],
         child: const LoginView(),
       ),
     );

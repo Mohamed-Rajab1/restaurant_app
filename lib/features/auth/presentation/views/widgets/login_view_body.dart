@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restaurant_app/core/utils/functions/custom_error_snack_bar.dart';
-import 'package:restaurant_app/core/utils/functions/custom_snack_bar.dart';
 import 'package:restaurant_app/core/utils/widgets/custom_loading_indicator.dart';
-import 'package:restaurant_app/features/auth/presentation/viewmodels/auth_cubit/auth_cubit.dart';
+import 'package:restaurant_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:restaurant_app/features/auth/presentation/views/widgets/custom_elevated_button.dart';
 import 'package:restaurant_app/features/auth/presentation/views/widgets/intro_section.dart';
 import 'package:restaurant_app/features/auth/presentation/views/widgets/login_section.dart';
+import 'package:restaurant_app/features/customer/menu/presentation/views/customer_menu_view.dart';
 
 class LoginViewBody extends StatefulWidget {
   const LoginViewBody({super.key});
@@ -51,29 +51,36 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                 listener: (context, state) {
                   if (state is AuthSuccessState) {
                     final role = state.user.role;
-                    customSnackBar(
-                      context,
-                      role: role,
-                      message: ' تم تسجيل الدخول بنجاح ، دورك هو',
-                    );
 
-                    // TODO: الانتقال للشاشة المناسبة بناءً على الـ Role
-                    // مثلاً: if (role == 'cashier') { افتح شاشة الكاشير }
+                    // توجيه المستخدم حسب Role
+                    if (role == 'admin') {
+                      // Navigator.pushReplacementNamed(context, '/admin_home');
+                      print('توجيه لصفحة الـ Admin');
+                    } else if (role == 'cashier') {
+                      print('توجيه لصفحة الـ Cashier');
+                    } else if (role == 'kitchen') {
+                      // Navigator.pushReplacementNamed(context, '/kitchen_home');
+                      print('توجيه لصفحة المطبخ Kitchen');
+                    } else {
+                      // Navigator.pushReplacementNamed(context, '/customer_home');
+                      print('توجيه لصفحة الزبون Customer');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CustomerMenuView(),
+                        ),
+                      );
+                    }
                   }
 
                   if (state is AuthFailureState) {
-                    // لو فشل، أظهر رسالة الخطأ للمستخدم
                     customErrorSnackBar(context, state.error);
                   }
                 },
                 builder: (context, state) {
-                  // هنا بنبني شكل الزرار بناءً على الحالة الحالية
                   if (state is AuthLoadingState) {
-                    // لو بيحمل، بنخفي الزرار ونظهر دايرة التحميل
                     return const CustomLoadingIndicator();
                   }
-
-                  // الحالة الطبيعية: زرار تسجيل الدخول
                   return CustomElevatedButton(
                     formKey: _formKey,
                     emailController: _emailController,
