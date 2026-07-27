@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:restaurant_app/features/customer/menu/presentation/manager/cubit/menu_cubit.dart';
 import 'package:restaurant_app/features/customer/menu/presentation/views/widgets/categories_list_view.dart';
 import 'package:restaurant_app/features/customer/menu/presentation/views/widgets/custom_app_bar.dart';
 import 'package:restaurant_app/features/customer/menu/presentation/views/widgets/custom_text_field.dart';
@@ -14,7 +16,6 @@ class CustomerMenuViewBody extends StatefulWidget {
 class _CustomerMenuViewBodyState extends State<CustomerMenuViewBody> {
   int selectedCategoryIndex = 0;
 
-  // بيانات وهمية للأقسام عشان نشوف الـ UI
   final List<String> categories = [
     'الكل',
     'برجر 🍔',
@@ -28,7 +29,7 @@ class _CustomerMenuViewBodyState extends State<CustomerMenuViewBody> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('قائمة الطعام 🍽️'),
-        actions: [CartBadgeIcon(itemCount: 0), const SizedBox(width: 8)],
+        actions: [CartBadgeIcon(), const SizedBox(width: 8)],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -46,6 +47,9 @@ class _CustomerMenuViewBodyState extends State<CustomerMenuViewBody> {
                 onCategorySelected: (index) {
                   setState(() {
                     selectedCategoryIndex = index;
+                    context.read<MenuCubit>().fetchMeals(
+                      category: categories[index],
+                    );
                   });
                 },
               ),
