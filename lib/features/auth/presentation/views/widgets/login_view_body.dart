@@ -6,7 +6,9 @@ import 'package:restaurant_app/features/auth/presentation/manager/auth_cubit/aut
 import 'package:restaurant_app/features/auth/presentation/views/widgets/custom_elevated_button.dart';
 import 'package:restaurant_app/features/auth/presentation/views/widgets/intro_section.dart';
 import 'package:restaurant_app/features/auth/presentation/views/widgets/login_section.dart';
+import 'package:restaurant_app/features/cashier/presentation/views/cashier_orders_view.dart';
 import 'package:restaurant_app/features/customer/menu/presentation/views/customer_menu_view.dart';
+import 'package:restaurant_app/features/kitchen/presentation/views/kitchen_orders_view.dart';
 
 class LoginViewBody extends StatefulWidget {
   const LoginViewBody({super.key});
@@ -57,13 +59,20 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                       // Navigator.pushReplacementNamed(context, '/admin_home');
                       print('توجيه لصفحة الـ Admin');
                     } else if (role == 'cashier') {
-                      print('توجيه لصفحة الـ Cashier');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CashierOrdersView(),
+                        ),
+                      );
                     } else if (role == 'kitchen') {
-                      // Navigator.pushReplacementNamed(context, '/kitchen_home');
-                      print('توجيه لصفحة المطبخ Kitchen');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const KitchenOrdersView(),
+                        ),
+                      );
                     } else {
-                      // Navigator.pushReplacementNamed(context, '/customer_home');
-                      print('توجيه لصفحة الزبون Customer');
                       Navigator.push(
                         context,
                         MaterialPageRoute(

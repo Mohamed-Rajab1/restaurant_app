@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/features/customer/cart/data/models/cart_item_model.dart';
+import 'package:restaurant_app/features/customer/orders/presentation/views/checkout_view.dart';
 
 class CartSummarySection extends StatelessWidget {
   final double totalPrice;
+  final List<CartItemModel> cartItems;
 
-  const CartSummarySection({super.key, required this.totalPrice});
+  const CartSummarySection({
+    super.key,
+    required this.totalPrice,
+    required this.cartItems,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -56,9 +63,18 @@ class CartSummarySection extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  // TODO: التوجيه لشاشة إتمام الطلب أو الدفع
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('جاري إتمام الطلب...')),
+                  if (cartItems.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('السلة فارغة!')),
+                    );
+                    return;
+                  }
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CheckoutView(),
+                    ),
                   );
                 },
                 child: const Text(

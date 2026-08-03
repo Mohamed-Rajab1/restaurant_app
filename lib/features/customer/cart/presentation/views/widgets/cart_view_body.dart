@@ -46,6 +46,7 @@ class CartViewBody extends StatelessWidget {
 
               // ملخص الفاتورة وزرار الدفع
               CartSummarySection(
+                cartItems: cartItems,
                 totalPrice: context.read<CartCubit>().calculateTotalPrice(),
               ),
             ],

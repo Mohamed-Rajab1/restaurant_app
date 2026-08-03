@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/features/customer/cart/data/models/cart_item_model.dart';
-import 'package:restaurant_app/features/customer/cart/presentation/views/widgets/cart_item_model.dart';
+import 'package:restaurant_app/features/customer/cart/presentation/views/widgets/cart_item_tile.dart';
 
 class ListViewItem extends StatelessWidget {
   const ListViewItem({super.key, required this.cartItems});

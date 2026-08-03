@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restaurant_app/features/customer/cart/presentation/manager/cart_cubit/cart_cubit.dart';
 import 'package:restaurant_app/features/customer/cart/presentation/manager/cart_cubit/cart_state.dart';
 import 'package:restaurant_app/features/customer/cart/presentation/views/cart_view.dart';
+import 'package:restaurant_app/features/customer/orders/presentation/views/orders_history_view.dart';
 
 class CartBadgeIcon extends StatelessWidget {
   const CartBadgeIcon({super.key});
@@ -16,48 +17,64 @@ class CartBadgeIcon extends StatelessWidget {
           0,
           (sum, item) => sum + item.quantity,
         );
-        return Stack(
-          alignment: Alignment.center,
+        return Row(
           children: [
             IconButton(
-              icon: const Icon(Icons.shopping_cart_outlined),
+              icon: const Icon(Icons.receipt_long_outlined),
+              tooltip: 'طلباتي',
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) {
-                      return const CartView();
-                    },
+                    builder: (context) => const OrdersHistoryView(),
                   ),
                 );
               },
             ),
-            // بنظهر الـ Badge بس لو فيه عناصر في السلة أكبر من 0
-            if (totalCount > 0)
-              Positioned(
-                top: 6,
-                right: 6,
-                child: Container(
-                  padding: const EdgeInsets.all(4),
-                  decoration: const BoxDecoration(
-                    color: Colors.red,
-                    shape: BoxShape.circle,
-                  ),
-                  constraints: const BoxConstraints(
-                    minWidth: 18,
-                    minHeight: 18,
-                  ),
-                  child: Text(
-                    '$totalCount',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
+            Stack(
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.shopping_cart_outlined),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return const CartView();
+                        },
+                      ),
+                    );
+                  },
                 ),
-              ),
+
+                // بنظهر الـ Badge بس لو فيه عناصر في السلة أكبر من 0
+                if (totalCount > 0)
+                  Positioned(
+                    top: 6,
+                    right: 6,
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: const BoxDecoration(
+                        color: Colors.red,
+                        shape: BoxShape.circle,
+                      ),
+                      constraints: const BoxConstraints(
+                        minWidth: 18,
+                        minHeight: 18,
+                      ),
+                      child: Text(
+                        '$totalCount',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+              ],
+            ),
           ],
         );
       },
