@@ -36,7 +36,11 @@ class _CustomerMenuViewBodyState extends State<CustomerMenuViewBody> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomTextField(),
+            CustomTextField(
+              onChanged: (value) {
+                context.read<MenuCubit>().searchMeals(value);
+              },
+            ),
             const SizedBox(height: 16),
 
             SizedBox(

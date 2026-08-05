@@ -85,4 +85,43 @@ class OrderCubit extends Cubit<OrderState> {
       );
     }
   }
+
+  Future<void> clearMyDeliveredOrdersHistory() async {
+    try {
+      // 1. نجيب الـ ID بتاع الزبون الحالي
+      final userId = FirebaseAuth.instance.currentUser?.uid;
+      if (userId == null) return;
+
+      final firestore = FirebaseFirestore.instance;
+
+      // 2. الفلترة المزدوجة: طلبات الزبون ده + المكتملة فقط
+      final querySnapshot = await firestore
+          .collection('orders')
+          .where('userId', isEqualTo: userId) // شرط 1: بتاعة الزبون ده بس
+          .where(
+            'status',
+            isEqualTo: 'delivered',
+          ) // شرط 2: اللي استلمها بس (تأكد إن الكلمة مطابقة للداتابيز)
+          .get();
+
+      if (querySnapshot.docs.isEmpty) {
+        return;
+      }
+
+      // 3. مسح الطلبات المكتملة باستخدام الـ Batch
+      final batch = firestore.batch();
+      for (var doc in querySnapshot.docs) {
+        batch.delete(doc.reference);
+      }
+      emit(OrdersFetchSuccess(orders: [])); // تحديث الحالة بعد المسح
+
+      await batch.commit();
+    } catch (e) {
+      emit(
+        OrdersFetchFailure(
+          errMessage: 'فشل في مسح الطلبات المكتملة: ${e.toString()}',
+        ),
+      );
+    }
+  }
 }

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
+import 'package:restaurant_app/features/admin/presentation/manager/cubit/admin_cubit.dart';
 import 'package:restaurant_app/features/auth/data/repos/auth_repository_impl.dart';
 import 'package:restaurant_app/features/auth/domain/usecases/login_use_case.dart';
 import 'package:restaurant_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
@@ -50,4 +51,6 @@ void setupServiceLocator() {
   getIt.registerFactory<CashierOrdersCubit>(() => CashierOrdersCubit());
 
   getIt.registerFactory<KitchenOrdersCubit>(() => KitchenOrdersCubit());
+
+  getIt.registerFactory<AdminCubit>(() => AdminCubit());
 }

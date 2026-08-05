@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restaurant_app/core/utils/functions/custom_error_snack_bar.dart';
 import 'package:restaurant_app/core/utils/widgets/custom_loading_indicator.dart';
+import 'package:restaurant_app/features/admin/presentation/views/admin_dashboard_view.dart';
 import 'package:restaurant_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:restaurant_app/features/auth/presentation/views/widgets/custom_elevated_button.dart';
 import 'package:restaurant_app/features/auth/presentation/views/widgets/intro_section.dart';
@@ -56,8 +57,12 @@ class _LoginViewBodyState extends State<LoginViewBody> {
 
                     // توجيه المستخدم حسب Role
                     if (role == 'admin') {
-                      // Navigator.pushReplacementNamed(context, '/admin_home');
-                      print('توجيه لصفحة الـ Admin');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const AdminDashboardView(),
+                        ),
+                      );
                     } else if (role == 'cashier') {
                       Navigator.push(
                         context,

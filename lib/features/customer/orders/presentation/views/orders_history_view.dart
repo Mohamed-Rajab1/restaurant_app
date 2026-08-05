@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restaurant_app/core/services/service_locator.dart';
 import 'package:restaurant_app/features/customer/orders/presentation/manager/cubit/order_cubit.dart';
 import 'package:restaurant_app/features/customer/orders/presentation/manager/cubit/order_state.dart';
+import 'package:restaurant_app/features/customer/orders/presentation/views/widgets/custom_delete_orders.dart';
 import '../../data/models/order_model.dart';
 
 class OrdersHistoryView extends StatelessWidget {
@@ -13,7 +14,11 @@ class OrdersHistoryView extends StatelessWidget {
     return BlocProvider(
       create: (context) => getIt<OrderCubit>()..fetchMyOrders(),
       child: Scaffold(
-        appBar: AppBar(title: const Text('طلباتي'), centerTitle: true),
+        appBar: AppBar(
+          title: const Text('طلباتي'),
+          centerTitle: true,
+          actions: [CustomDeleteOrders()],
+        ),
         body: BlocBuilder<OrderCubit, OrderState>(
           builder: (context, state) {
             if (state is OrdersFetchLoading) {
