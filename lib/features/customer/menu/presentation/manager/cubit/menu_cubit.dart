@@ -12,12 +12,19 @@ class MenuCubit extends Cubit<MenuState> {
     emit(MenuLoadingState());
     try {
       final result = await menuRepo.getMeals(category: category);
+
+      // 👈 السطر السحري الأول: التأكد إن الكيوبت لسه عايش بعد ما الفايربيز رد
+      if (isClosed) return;
+
       _allMeals = result.fold((failure) => [], (meals) => meals);
       result.fold(
         (failure) => emit(MenuFailureState(failure)),
         (meals) => emit(MenuSuccessState(meals)),
       );
     } on Exception catch (e) {
+      // 👈 السطر السحري الثاني: التأكد برضه قبل إرسال حالة الخطأ
+      if (isClosed) return;
+
       emit(MenuFailureState('حدث خطأ أثناء جلب الوجبات: ${e.toString()}'));
     }
   }

@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:restaurant_app/features/admin/presentation/manager/cubit/admin_cubit.dart';
 
 class AddMealDialog extends StatefulWidget {
@@ -10,69 +12,118 @@ class AddMealDialog extends StatefulWidget {
 }
 
 class _AddMealDialogState extends State<AddMealDialog> {
-  final _formKey = GlobalKey<FormState>();
-  final _categoryController = TextEditingController();
-  final _nameController = TextEditingController();
-  final _priceController = TextEditingController();
-  final _descController = TextEditingController();
-  final _imageUrlController = TextEditingController();
+  final categoryController = TextEditingController();
+  final nameController = TextEditingController();
+  final priceController = TextEditingController();
+  final descController = TextEditingController();
 
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _priceController.dispose();
-    _descController.dispose();
-    _imageUrlController.dispose();
-    super.dispose();
+  final formKey = GlobalKey<FormState>();
+
+  File? _selectedImage; // المتغير اللي هيشيل الصورة المحددة
+
+  // دالة فتح الاستوديو واختيار الصورة
+  Future<void> _pickImage() async {
+    final pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+    );
+
+    if (pickedFile != null) {
+      setState(() {
+        _selectedImage = File(pickedFile.path);
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final adminCubit = context.read<AdminCubit>();
+
     return AlertDialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      title: const Text('إضافة وجبة جديدة 🍔', textAlign: TextAlign.center),
-      content: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
+      title: const Text(
+        'إضافة وجبة جديدة 🍔',
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
+      content: Form(
+        key: formKey,
+        child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              TextFormField(
-                controller: _categoryController,
-                decoration: const InputDecoration(labelText: 'الفئة'),
-                validator: (val) =>
-                    val == null || val.isEmpty ? 'هذا الحقل مطلوب' : null,
-              ),
-              const SizedBox(height: 8),
-              TextFormField(
-                controller: _nameController,
-                decoration: const InputDecoration(labelText: 'اسم الوجبة'),
-                validator: (val) =>
-                    val == null || val.isEmpty ? 'هذا الحقل مطلوب' : null,
-              ),
-              const SizedBox(height: 8),
-              TextFormField(
-                controller: _priceController,
-                keyboardType: const TextInputType.numberWithOptions(
-                  decimal: true,
+              // 👈 منطقة اختيار وعرض الصورة
+              GestureDetector(
+                onTap: _pickImage,
+                child: Container(
+                  height: 120,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: Colors.grey.shade400,
+                      style: BorderStyle.solid,
+                    ),
+                  ),
+                  child: _selectedImage != null
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Image.file(_selectedImage!, fit: BoxFit.cover),
+                        )
+                      : const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.add_a_photo,
+                              size: 40,
+                              color: Colors.grey,
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              'اضغط لاختيار صورة الوجبة',
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                          ],
+                        ),
                 ),
-                decoration: const InputDecoration(labelText: 'السعر (ج.م)'),
-                validator: (val) =>
-                    val == null || val.isEmpty ? 'هذا الحقل مطلوب' : null,
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 16),
+
+              // باقي الحقول
               TextFormField(
-                controller: _descController,
-                decoration: const InputDecoration(labelText: 'الوصف'),
-              ),
-              const SizedBox(height: 8),
-              TextFormField(
-                controller: _imageUrlController,
+                controller: categoryController,
                 decoration: const InputDecoration(
-                  labelText: 'رابط الصورة (URL)',
+                  labelText: 'التصنيف',
+                  border: OutlineInputBorder(),
                 ),
-                validator: (val) =>
-                    val == null || val.isEmpty ? 'هذا الحقل مطلوب' : null,
+                validator: (val) => val!.trim().isEmpty ? 'مطلوب' : null,
+              ),
+              const SizedBox(height: 12),
+              TextFormField(
+                controller: nameController,
+                decoration: const InputDecoration(
+                  labelText: 'اسم الوجبة',
+                  border: OutlineInputBorder(),
+                ),
+                validator: (val) => val!.trim().isEmpty ? 'مطلوب' : null,
+              ),
+              const SizedBox(height: 12),
+              TextFormField(
+                controller: priceController,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  labelText: 'السعر',
+                  border: OutlineInputBorder(),
+                ),
+                validator: (val) => val!.trim().isEmpty ? 'مطلوب' : null,
+              ),
+              const SizedBox(height: 12),
+              TextFormField(
+                controller: descController,
+                maxLines: 2,
+                decoration: const InputDecoration(
+                  labelText: 'الوصف',
+                  border: OutlineInputBorder(),
+                ),
+                validator: (val) => val!.trim().isEmpty ? 'مطلوب' : null,
               ),
             ],
           ),
@@ -81,23 +132,34 @@ class _AddMealDialogState extends State<AddMealDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('إلغاء'),
+          child: const Text('إلغاء', style: TextStyle(color: Colors.red)),
         ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(backgroundColor: Colors.indigo),
           onPressed: () {
-            if (_formKey.currentState!.validate()) {
-              context.read<AdminCubit>().addMeal(
-                category: _categoryController.text.trim(),
-                name: _nameController.text.trim(),
-                price: double.parse(_priceController.text.trim()),
-                description: _descController.text.trim(),
-                imageUrl: _imageUrlController.text.trim(),
+            if (formKey.currentState!.validate()) {
+              if (_selectedImage == null) {
+                // إظهار تنبيه لو الأدمن نسي يختار صورة
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('يرجى اختيار صورة للوجبة أولاً!'),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+                return;
+              }
+
+              adminCubit.addMeal(
+                category: categoryController.text.trim(),
+                name: nameController.text.trim(),
+                price: double.parse(priceController.text.trim()),
+                description: descController.text.trim(),
+                imageFile: _selectedImage!, // بنبعت ملف الصورة للكيوبت
               );
               Navigator.pop(context);
             }
           },
-          child: const Text('حفظ', style: TextStyle(color: Colors.white)),
+          child: const Text('إضافة', style: TextStyle(color: Colors.white)),
         ),
       ],
     );

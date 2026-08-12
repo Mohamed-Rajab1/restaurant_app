@@ -74,4 +74,51 @@ class AuthRepositoryImpl implements AuthRepository {
     }
     return null;
   }
+
+  @override
+  Future<UserEntity> register({
+    required String name,
+    required String phone,
+    required String email,
+    required String password,
+  }) async {
+    try {
+      // 1. إنشاء حساب في Firebase Auth
+      final UserCredential credential = await _firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password);
+
+      final String uid = credential.user!.uid;
+
+      // 2. تجهيز بيانات العميل اللي هتتخزن في Firestore
+      // 💡 لاحظ إن الـ role ثابت هنا 'customer'
+      final Map<String, dynamic> userData = {
+        'uid': uid,
+        'name': name,
+        'phone': phone,
+        'email': email,
+        'role': 'customer',
+        'createdAt': DateTime.now(),
+      };
+
+      // 3. حفظ البيانات في كوليكشن users
+      await _firestore.collection('users').doc(uid).set(userData);
+
+      // 4. إرجاع الـ Entity للـ Cubit (بافتراض شكل الـ Entity عندك كده)
+      return UserEntity(
+        uid: uid,
+        name: name,
+        email: email,
+        role: 'customer', // مهم جداً عشان الشاشة توجهه صح
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        throw Exception('كلمة المرور ضعيفة جداً.');
+      } else if (e.code == 'email-already-in-use') {
+        throw Exception('هذا الحساب موجود بالفعل.');
+      }
+      throw Exception('حدث خطأ أثناء إنشاء الحساب: ${e.message}');
+    } catch (e) {
+      throw Exception('حدث خطأ غير متوقع: $e');
+    }
+  }
 }

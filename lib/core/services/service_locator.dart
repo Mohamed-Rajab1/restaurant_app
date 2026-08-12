@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:restaurant_app/features/admin/presentation/manager/cubit/admin_cubit.dart';
 import 'package:restaurant_app/features/auth/data/repos/auth_repository_impl.dart';
 import 'package:restaurant_app/features/auth/domain/usecases/login_use_case.dart';
+import 'package:restaurant_app/features/auth/domain/usecases/register_use_case.dart';
 import 'package:restaurant_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:restaurant_app/features/cashier/presentation/manager/cashier_cubit/cashier_orders_cubit.dart';
 import 'package:restaurant_app/features/customer/cart/presentation/manager/cart_cubit/cart_cubit.dart';
@@ -28,11 +29,17 @@ void setupServiceLocator() {
     () => AuthRepositoryImpl(getIt<FirebaseAuth>(), getIt<FirebaseFirestore>()),
   );
 
+  getIt.registerLazySingleton<RegisterUseCase>(
+    () => RegisterUseCase(getIt<AuthRepository>()),
+  );
+
   getIt.registerLazySingleton<LoginUseCase>(
     () => LoginUseCase(getIt<AuthRepository>()),
   );
 
-  getIt.registerFactory<AuthCubit>(() => AuthCubit(getIt<LoginUseCase>()));
+  getIt.registerFactory<AuthCubit>(
+    () => AuthCubit(getIt<LoginUseCase>(), getIt<RegisterUseCase>()),
+  );
 
   getIt.registerLazySingleton<MenuRemoteDataSource>(
     () => MenuRemoteDataSourceImpl(firestore: getIt<FirebaseFirestore>()),

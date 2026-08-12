@@ -26,3 +26,10 @@ class OrdersFetchFailure extends OrderState {
   final String errMessage;
   OrdersFetchFailure({required this.errMessage});
 }
+
+class OrderPaymentMethodChanged extends OrderState {}
+
+class OrderPaymentUrlGenerated extends OrderState {
+  final String paymentUrl;
+  OrderPaymentUrlGenerated(this.paymentUrl);
+}

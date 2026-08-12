@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restaurant_app/features/admin/presentation/manager/cubit/admin_cubit.dart';
 import 'package:restaurant_app/features/admin/presentation/views/widgets/add_meal_dialog.dart';
+import 'package:restaurant_app/features/admin/presentation/views/widgets/delete_dialog.dart';
+import 'package:restaurant_app/features/admin/presentation/views/widgets/show_edit_meal_dialog.dart';
 
 class BuildMealsTab extends StatelessWidget {
   const BuildMealsTab({super.key});
@@ -19,7 +21,7 @@ class BuildMealsTab extends StatelessWidget {
             context: context,
             builder: (_) => BlocProvider.value(
               value: context.read<AdminCubit>(),
-              child: AddMealDialog(),
+              child: const AddMealDialog(),
             ),
           );
         },
@@ -63,11 +65,25 @@ class BuildMealsTab extends StatelessWidget {
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   subtitle: Text('${meal['price'] ?? 0} ج.م'),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.delete, color: Colors.red),
-                    onPressed: () {
-                      context.read<AdminCubit>().deleteMeal(mealId);
-                    },
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize
+                        .min, // مهمة عشان الأيقونات ماتاخدش عرض الشاشة كله
+                    children: [
+                      // 👈 زرار التعديل اللي ضفناه
+                      IconButton(
+                        icon: const Icon(Icons.edit, color: Colors.blue),
+                        onPressed: () {
+                          showEditMealDialog(context, meal, mealId);
+                        },
+                      ),
+                      // 👈 زرار الحذف بتاعك زي ما هو
+                      IconButton(
+                        icon: const Icon(Icons.delete, color: Colors.red),
+                        onPressed: () {
+                          confirmDelete(context, mealId);
+                        },
+                      ),
+                    ],
                   ),
                 ),
               );

@@ -4,6 +4,7 @@ import 'package:restaurant_app/features/customer/menu/presentation/manager/cubit
 import 'package:restaurant_app/features/customer/menu/presentation/views/widgets/categories_list_view.dart';
 import 'package:restaurant_app/features/customer/menu/presentation/views/widgets/custom_app_bar.dart';
 import 'package:restaurant_app/features/customer/menu/presentation/views/widgets/custom_text_field.dart';
+import 'package:restaurant_app/features/customer/menu/presentation/views/widgets/customer_drawer.dart';
 import 'package:restaurant_app/features/customer/menu/presentation/views/widgets/grid_view_body.dart';
 
 class CustomerMenuViewBody extends StatefulWidget {
@@ -31,6 +32,8 @@ class _CustomerMenuViewBodyState extends State<CustomerMenuViewBody> {
         title: const Text('قائمة الطعام 🍽️'),
         actions: [CartBadgeIcon(), const SizedBox(width: 8)],
       ),
+      drawer: const CustomerDrawer(), // 👈 استخدام القائمة الجانبية الجديدة
+
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -42,7 +45,6 @@ class _CustomerMenuViewBodyState extends State<CustomerMenuViewBody> {
               },
             ),
             const SizedBox(height: 16),
-
             SizedBox(
               height: 40,
               child: CategoriesListView(
@@ -59,8 +61,7 @@ class _CustomerMenuViewBodyState extends State<CustomerMenuViewBody> {
               ),
             ),
             const SizedBox(height: 16),
-
-            GridViewBody(),
+            GridViewBody(), // افترضت إن الـ Expanded موجودة جوه الـ GridViewBody عشان الشاشة ماتضربش
           ],
         ),
       ),

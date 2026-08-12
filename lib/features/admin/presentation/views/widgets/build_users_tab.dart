@@ -10,7 +10,10 @@ class BuildUsersTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('users').snapshots(),
+      stream: FirebaseFirestore.instance
+          .collection('users')
+          .where('role', isNotEqualTo: 'admin')
+          .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -40,31 +43,92 @@ class BuildUsersTab extends StatelessWidget {
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 subtitle: Text(user.email),
-                trailing: DropdownButton<String>(
-                  value:
-                      [
-                        'customer',
-                        'cashier',
-                        'kitchen',
-                        'admin',
-                      ].contains(user.role)
-                      ? user.role
-                      : 'customer',
-                  underline: const SizedBox.shrink(),
-                  items: const [
-                    DropdownMenuItem(value: 'customer', child: Text('زبون')),
-                    DropdownMenuItem(value: 'cashier', child: Text('كاشير')),
-                    DropdownMenuItem(value: 'kitchen', child: Text('مطبخ')),
-                    DropdownMenuItem(value: 'admin', child: Text('أدمن')),
+
+                // 👈 التعديل هنا: وضعنا الصلاحيات وزرار الحذف داخل Row
+                trailing: Row(
+                  mainAxisSize:
+                      MainAxisSize.min, // مهم جداً عشان ميبوظش الـ ListTile
+                  children: [
+                    // قائمة تغيير الصلاحية
+                    DropdownButton<String>(
+                      value:
+                          [
+                            'customer',
+                            'cashier',
+                            'kitchen',
+                            'admin',
+                          ].contains(user.role)
+                          ? user.role
+                          : 'customer',
+                      underline: const SizedBox.shrink(),
+                      items: const [
+                        DropdownMenuItem(
+                          value: 'customer',
+                          child: Text('زبون'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'cashier',
+                          child: Text('كاشير'),
+                        ),
+                        DropdownMenuItem(value: 'kitchen', child: Text('مطبخ')),
+                        DropdownMenuItem(value: 'admin', child: Text('أدمن')),
+                      ],
+                      onChanged: (newRole) {
+                        if (newRole != null && newRole != user.role) {
+                          context.read<AdminCubit>().updateUserRole(
+                            user.uid,
+                            newRole,
+                          );
+                        }
+                      },
+                    ),
+
+                    const SizedBox(
+                      width: 8,
+                    ), // مسافة صغيرة بين القائمة وزرار الحذف
+                    // زرار الحذف
+                    IconButton(
+                      icon: const Icon(Icons.delete, color: Colors.red),
+                      tooltip: 'حذف المستخدم',
+                      onPressed: () {
+                        // إظهار نافذة التأكيد قبل الحذف
+                        showDialog(
+                          context: context,
+                          builder: (ctx) => AlertDialog(
+                            title: const Text('تأكيد الحذف ⚠️'),
+                            content: Text(
+                              'هل أنت متأكد أنك تريد حذف المستخدم "${user.name}"؟',
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(ctx),
+                                child: const Text(
+                                  'إلغاء',
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.red,
+                                ),
+                                onPressed: () {
+                                  // استدعاء دالة الحذف (تأكد إنك ضفتها في AdminCubit)
+                                  context.read<AdminCubit>().deleteUser(
+                                    user.uid,
+                                  );
+                                  Navigator.pop(ctx);
+                                },
+                                child: const Text(
+                                  'نعم، احذف',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
                   ],
-                  onChanged: (newRole) {
-                    if (newRole != null && newRole != user.role) {
-                      context.read<AdminCubit>().updateUserRole(
-                        user.uid,
-                        newRole,
-                      );
-                    }
-                  },
                 ),
               ),
             );
