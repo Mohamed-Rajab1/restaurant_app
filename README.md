@@ -43,7 +43,7 @@ The application handles four distinct operational dashboards securely routed via
 
 ### 📱 1. Login
 <p align="center">
-  <img src="[C:\Users\HP\OneDrive\الصور\Screenshots\WhatsApp Image 2026-08-18 at 2.16.42 AM (1).jpeg]" width="200">
+  <img src="https://github.com/user-attachments/assets/8d6fe19e-c09d-4c68-9723-5b466bb110cc" width="200">
 </p>
 
 ### 📱 2. Customer Experience (6 Screens)
@@ -123,3 +123,4 @@ To get a local copy up and running follow these simple steps.
     flutter run
 📫 Contact
 Mohamed - Junior Flutter Developer
+
