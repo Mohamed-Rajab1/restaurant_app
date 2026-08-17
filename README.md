@@ -20,7 +20,7 @@
 - [Screenshots](#-screenshots)
 - [Tech Stack & Architecture](#-tech-stack--architecture)
 - [Getting Started](#-getting-started)
-- [Contact](https://www.linkedin.com/in/mohamed-ragab-551300328?utm_source=share_via&utm_content=profile&utm_medium=member_android)
+- [Contact](#-contact)
 
 ---
 
@@ -41,22 +41,37 @@ The application handles four distinct operational dashboards securely routed via
 
 ## 📸 Screenshots
 
-<div align="center">
-  <table>
-    <tr>
-      <td align="center"><b>Customer App</b></td>
-      <td align="center"><b>Admin Dashboard</b></td>
-      <td align="center"><b>Cashier POS</b></td>
-      <td align="center"><b>Kitchen Display</b></td>
-    </tr>
-    <tr>
-      <td><img src="[اسحب_صورة_العميل_هنا]" width="220" alt="Customer UI"></td>
-      <td><img src="[اسحب_صورة_الأدمن_هنا]" width="220" alt="Admin UI"></td>
-      <td><img src="[اسحب_صورة_الكاشير_هنا]" width="220" alt="Cashier UI"></td>
-      <td><img src="[اسحب_صورة_المطبخ_هنا]" width="220" alt="Kitchen UI"></td>
-    </tr>
-  </table>
-</div>
+### 📱 1. Customer Experience (4 Screens)
+<p align="center">
+  <img src="[صورة_العميل_1_هنا]" width="200"> &nbsp;
+  <img src="[صورة_العميل_2_هنا]" width="200"> &nbsp;
+  <img src="[صورة_العميل_3_هنا]" width="200"> &nbsp;
+  <img src="[صورة_العميل_4_هنا]" width="200">
+</p>
+
+### 👑 2. Admin Dashboard (8 Screens)
+<p align="center">
+  <img src="[صورة_الأدمن_1_هنا]" width="200"> &nbsp;
+  <img src="[صورة_الأدمن_2_هنا]" width="200"> &nbsp;
+  <img src="[صورة_الأدمن_3_هنا]" width="200"> &nbsp;
+  <img src="[صورة_الأدمن_4_هنا]" width="200">
+</p>
+<p align="center">
+  <img src="[صورة_الأدمن_5_هنا]" width="200"> &nbsp;
+  <img src="[صورة_الأدمن_6_هنا]" width="200"> &nbsp;
+  <img src="[صورة_الأدمن_7_هنا]" width="200"> &nbsp;
+  <img src="[صورة_الأدمن_8_هنا]" width="200">
+</p>
+
+### 💰 3. Cashier POS
+<p align="center">
+  <img src="[صورة_الكاشير_هنا]" width="220">
+</p>
+
+### 🍳 4. Kitchen Display
+<p align="center">
+  <img src="[صورة_المطبخ_هنا]" width="220">
+</p>
 
 ---
 
@@ -71,6 +86,7 @@ The application handles four distinct operational dashboards securely routed via
 ### Backend & Storage
 * **Firebase Auth:** Secure user authentication.
 * **Cloud Firestore:** NoSQL database for real-time order tracking and role storage.
+* **ASP.NET Core Web API:** Integration endpoints for advanced server-side operations.
 * **Microsoft SQL Server:** Relational database backing the ASP.NET APIs.
 
 ---
