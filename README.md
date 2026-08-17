@@ -20,7 +20,7 @@
 - [Screenshots](#-screenshots)
 - [Tech Stack & Architecture](#-tech-stack--architecture)
 - [Getting Started](#-getting-started)
-- [Contact](#-contact)
+- [Contact](https://www.linkedin.com/in/mohamed-ragab-551300328?utm_source=share_via&utm_content=profile&utm_medium=member_android)
 
 ---
 
