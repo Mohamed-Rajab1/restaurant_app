@@ -20,7 +20,7 @@
 - [Screenshots](#-screenshots)
 - [Tech Stack & Architecture](#-tech-stack--architecture)
 - [Getting Started](#-getting-started)
-- [Contact](#-contact)
+- [Contact](https://www.linkedin.com/in/mohamed-ragab-551300328?utm_source=share_via&utm_content=profile&utm_medium=member_android)
 
 ---
 
@@ -41,36 +41,45 @@ The application handles four distinct operational dashboards securely routed via
 
 ## 📸 Screenshots
 
-### 📱 1. Customer Experience (4 Screens)
+### 📱 1. Login
 <p align="center">
-  <img src="[صورة_العميل_1_هنا]" width="200"> &nbsp;
-  <img src="[صورة_العميل_2_هنا]" width="200"> &nbsp;
-  <img src="[صورة_العميل_3_هنا]" width="200"> &nbsp;
-  <img src="[صورة_العميل_4_هنا]" width="200">
+  <img src="[C:\Users\HP\OneDrive\الصور\Screenshots\WhatsApp Image 2026-08-18 at 2.16.42 AM (1).jpeg]" width="200">
 </p>
 
-### 👑 2. Admin Dashboard (8 Screens)
+### 📱 2. Customer Experience (6 Screens)
 <p align="center">
-  <img src="[صورة_الأدمن_1_هنا]" width="200"> &nbsp;
-  <img src="[صورة_الأدمن_2_هنا]" width="200"> &nbsp;
-  <img src="[صورة_الأدمن_3_هنا]" width="200"> &nbsp;
-  <img src="[صورة_الأدمن_4_هنا]" width="200">
+  <img src="[C:\Users\HP\OneDrive\الصور\Screenshots\WhatsApp Image 2026-08-18 at 2.26.32 AM.jpeg]" width="200"> &nbsp;
+  <img src="[C:\Users\HP\OneDrive\الصور\Screenshots\WhatsApp Image 2026-08-18 at 2.26.32 AM (1).jpeg]" width="200"> &nbsp;
+  <img src="[C:\Users\HP\OneDrive\الصور\Screenshots\WhatsApp Image 2026-08-18 at 2.16.42 AM (4).jpeg]" width="200"> &nbsp;
+  <img src="[C:\Users\HP\OneDrive\الصور\Screenshots\WhatsApp Image 2026-08-18 at 2.16.42 AM (3).jpeg]" width="200">
 </p>
 <p align="center">
-  <img src="[صورة_الأدمن_5_هنا]" width="200"> &nbsp;
-  <img src="[صورة_الأدمن_6_هنا]" width="200"> &nbsp;
-  <img src="[صورة_الأدمن_7_هنا]" width="200"> &nbsp;
-  <img src="[صورة_الأدمن_8_هنا]" width="200">
+  <img src="[C:\Users\HP\OneDrive\الصور\Screenshots\WhatsApp Image 2026-08-18 at 2.16.42 AM (2).jpeg]" width="200"> &nbsp;
+  <img src="[C:\Users\HP\OneDrive\الصور\Screenshots\WhatsApp Image 2026-08-18 at 2.16.42 AM (5).jpeg]" width="200">;
 </p>
 
-### 💰 3. Cashier POS
+### 👑 3. Admin Dashboard (8 Screens)
 <p align="center">
-  <img src="[صورة_الكاشير_هنا]" width="220">
+  <img src="[C:\Users\HP\OneDrive\الصور\Screenshots\WhatsApp Image 2026-08-18 at 2.16.41 AM (4).jpeg]" width="200"> &nbsp;
+  <img src="[C:\Users\HP\OneDrive\الصور\Screenshots\WhatsApp Image 2026-08-18 at 2.16.41 AM.jpeg]" width="200"> &nbsp;
+  <img src="[C:\Users\HP\OneDrive\الصور\Screenshots\WhatsApp Image 2026-08-18 at 2.16.41 AM (3).jpeg]" width="200"> &nbsp;
+  <img src="[C:\Users\HP\OneDrive\الصور\Screenshots\WhatsApp Image 2026-08-18 at 2.16.41 AM (2).jpeg]" width="200">
+</p>
+<p align="center">
+  <img src="[C:\Users\HP\OneDrive\الصور\Screenshots\WhatsApp Image 2026-08-18 at 2.16.41 AM (1).jpeg]" width="200"> &nbsp;
+  <img src="[C:\Users\HP\OneDrive\الصور\Screenshots\WhatsApp Image 2026-08-18 at 2.16.40 AM.jpeg]" width="200"> &nbsp;
+  <img src="[C:\Users\HP\OneDrive\الصور\Screenshots\WhatsApp Image 2026-08-18 at 2.16.40 AM (2).jpeg]" width="200"> &nbsp;
+  <img src="[C:\Users\HP\OneDrive\الصور\Screenshots\WhatsApp Image 2026-08-18 at 2.16.40 AM (1).jpeg]" width="200">
 </p>
 
-### 🍳 4. Kitchen Display
+### 💰 4. Cashier POS
 <p align="center">
-  <img src="[صورة_المطبخ_هنا]" width="220">
+  <img src="[C:\Users\HP\OneDrive\الصور\Screenshots\WhatsApp Image 2026-08-18 at 2.16.42 AM.jpeg]" width="220">
+</p>
+
+### 🍳 5. Kitchen Display
+<p align="center">
+  <img src="[C:\Users\HP\OneDrive\الصور\Screenshots\WhatsApp Image 2026-08-18 at 2.16.41 AM (5).jpeg]" width="220">
 </p>
 
 ---
