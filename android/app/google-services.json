@@ -7,6 +7,25 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:339705734526:android:a63eceb2150f48d0727f2f",
+        "android_client_info": {
+          "package_name": "com.beti.restaurant_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAd3vwgXyS2UhItcvYRQrrNbkGU0GWOpkE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:339705734526:android:1fcee1bdb5a238fd727f2f",
         "android_client_info": {
           "package_name": "com.example.restaurant_app"

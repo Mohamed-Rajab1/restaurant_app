@@ -48,14 +48,32 @@ class AdminDashboardView extends StatelessWidget {
                         // 1. فتح نافذة أرقام التواصل
                         showContactSettingsDialog(cubitContext);
                       } else if (value == 'add_staff') {
-                        // 2. فتح نافذة إضافة موظف
-                        showDialog(
-                          context: cubitContext,
-                          builder: (context) => BlocProvider.value(
-                            value: cubitContext.read<AdminCubit>(),
-                            child: const AddStaffDialog(),
-                          ),
-                        );
+                        // 1. نقفل الكيبورد لو كانت مفتوحة (عشان بتعمل شلل مع فتح الشاشات من تحت)
+                        FocusManager.instance.primaryFocus?.unfocus();
+
+                        // 2. 👈 السر هنا: نجيب الكيوبت من getIt مباشرة بدون context
+                        final adminCubit = getIt<AdminCubit>();
+
+                        // 3. نفتح الشاشة
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            backgroundColor: Colors.white,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(24),
+                              ),
+                            ),
+                            builder: (bottomSheetContext) {
+                              // نمرر الكيوبت للشاشة الجديدة
+                              return BlocProvider.value(
+                                value: adminCubit,
+                                child: const AddStaffBottomSheet(),
+                              );
+                            },
+                          );
+                        });
                       } else if (value == 'logout') {
                         // 3. تسجيل الخروج
                         await FirebaseAuth.instance.signOut();

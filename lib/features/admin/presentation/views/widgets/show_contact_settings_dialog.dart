@@ -18,12 +18,12 @@ void showContactSettingsDialog(BuildContext context) {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         content: FutureBuilder<DocumentSnapshot>(
-          // بنجيب الأرقام الحالية الأول عشان نعرضها للأدمن يعدل عليها
           future: FirebaseFirestore.instance
               .collection('settings')
               .doc('contact_info')
               .get(),
           builder: (context, snapshot) {
+            // 1. حالة التحميل
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const SizedBox(
                 height: 100,
@@ -31,13 +31,30 @@ void showContactSettingsDialog(BuildContext context) {
               );
             }
 
-            // لو في بيانات قديمة بنحطها في الـ Controllers
-            if (snapshot.hasData && snapshot.data!.exists) {
-              final data = snapshot.data!.data() as Map<String, dynamic>;
-              phoneController.text = data['phone'] ?? '';
-              whatsappController.text = data['whatsapp'] ?? '';
+            // 2. 👈 إضافة جديدة: لو حصل مشكلة في الاتصال بالفايربيز
+            if (snapshot.hasError) {
+              return SizedBox(
+                height: 100,
+                child: Center(
+                  child: Text(
+                    'حدث خطأ في الاتصال: ${snapshot.error}',
+                    style: const TextStyle(color: Colors.red),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              );
             }
 
+            // 3. لو في بيانات قديمة والوثيقة موجودة فعلاً
+            if (snapshot.hasData && snapshot.data!.exists) {
+              final data = snapshot.data!.data() as Map<String, dynamic>?;
+              if (data != null) {
+                phoneController.text = data['phone'] ?? '';
+                whatsappController.text = data['whatsapp'] ?? '';
+              }
+            }
+
+            // 4. عرض الفورمة في كل الحالات (حتى لو مفيش بيانات قديمة)
             return Form(
               key: formKey,
               child: Column(
@@ -80,8 +97,7 @@ void showContactSettingsDialog(BuildContext context) {
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: Colors.indigo),
             onPressed: () {
-              if (formKey.currentState!.validate()) {
-                // استدعاء دالة التحديث من الكيوبت
+              if (formKey.currentState?.validate() == true) {
                 adminCubit.updateContactInfo(
                   newPhone: phoneController.text.trim(),
                   newWhatsapp: whatsappController.text.trim(),

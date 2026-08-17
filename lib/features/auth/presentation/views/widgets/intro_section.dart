@@ -10,7 +10,7 @@ class IntroSection extends StatelessWidget {
         Icon(Icons.restaurant_menu, size: 80, color: Colors.orange),
         SizedBox(height: 16),
         Text(
-          ' إدارة المطعم',
+          ' بيتي ',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),

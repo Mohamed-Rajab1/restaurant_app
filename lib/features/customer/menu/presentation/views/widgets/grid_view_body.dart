@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restaurant_app/core/utils/functions/custom_text_error.dart';
 import 'package:restaurant_app/features/customer/menu/presentation/manager/cubit/menu_cubit.dart';
 import 'package:restaurant_app/features/customer/menu/presentation/manager/cubit/menu_state.dart';
+import 'package:restaurant_app/features/customer/menu/presentation/views/meal_details_view.dart';
 import 'package:restaurant_app/features/customer/menu/presentation/views/widgets/custom_card_body.dart';
 import 'package:restaurant_app/features/customer/menu/presentation/views/widgets/meal_shimmer_loading.dart';
 
@@ -33,7 +34,22 @@ class GridViewBody extends StatelessWidget {
               itemCount: state.meals.length,
               itemBuilder: (context, index) {
                 final meal = state.meals[index];
-                return CustomCardBody(meal: meal);
+                return InkWell(
+                  onTap: () {
+                    // 👈 الانتقال لشاشة التفاصيل وتمرير الوجبة الحالية
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MealDetailsView(
+                          meal: meal,
+                        ), // بنبعت كائن الوجبة هنا
+                      ),
+                    );
+                  },
+                  borderRadius: BorderRadius.circular(12),
+
+                  child: CustomCardBody(meal: meal),
+                );
               },
             );
           } else if (state is MenuFailureState) {

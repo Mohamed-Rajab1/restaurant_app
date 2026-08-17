@@ -11,15 +11,19 @@ class CartCubit extends Cubit<CartState> {
   List<CartItemModel> get items => _cartItems;
 
   // 1. إضافة وجبة للسلة
-  void addToCart(MealEntity meal) {
+  // 👈 ضفنا quantity كمتغير اختياري، والـ default بتاعه 1 لو محطتوش
+  void addToCart(MealEntity meal, {int quantity = 1}) {
     // البحث لو كانت الوجبة موجودة بالفعل
     final index = _cartItems.indexWhere((item) => item.meal.id == meal.id);
 
     if (index != -1) {
-      _cartItems[index].quantity++;
+      // 👈 لو موجودة، نجمع الكمية القديمة + الكمية الجديدة اللي العميل طلبها
+      _cartItems[index].quantity += quantity;
     } else {
-      _cartItems.add(CartItemModel(meal: meal));
+      // 👈 لو مش موجودة، نضيفها ونديها الكمية اللي العميل طلبها
+      _cartItems.add(CartItemModel(meal: meal, quantity: quantity));
     }
+
     _emitCartState();
   }
 

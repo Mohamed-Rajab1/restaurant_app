@@ -60,12 +60,14 @@ class _CheckoutViewState extends State<CheckoutView> {
 
               // التحقق من النتيجة بعد قفل شاشة الدفع
               if (isSuccess == true) {
+                if(!context.mounted) return;
                 // الدفع تم بنجاح، نأمر الـ Cubit بحفظ الأوردر في الفايربيز
                 context.read<OrderCubit>().saveOrderToFirebase(
                   address: _addressController.text.trim(),
                   phone: _phoneController.text.trim(),
                 );
               } else {
+                if(!context.mounted) return;
                 // المستخدم ألغى العملية أو الدفع فشل
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
